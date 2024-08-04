@@ -3,35 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-const ChatBox = () => {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (input.trim()) {
-      let newMessage = [...messages, { text: input.trim(), type: 'user' }, { text: 'Loading...', type: 'bot' }]
-      setMessages(newMessage);
-
-       // 使用内置 AI 服务
-      const session = await window.ai.createTextSession();
-      // 以普通的方式返回
-      const response = await session.prompt(input.trim());
-      newMessage.splice(newMessage.length - 1, 1, { text: response, type: 'bot' });
-      setMessages(newMessage);
-
-      // // 以流式返回
-      // const stream = await session.promptStreaming(input.trim());
-      // for await (const response of stream) {
-      //   newMessage.splice(newMessage.length - 1, 1, { text: response, type: 'bot' });
-      //   console.log(response);
-      //   setMessages(newMessage);
-      // }
-
-      setInput('');
-    }
-  };
-
+const ChatBox = ({ handleSubmit, messages, input, setInput}) => {
   return (
     <div className="w-full max-w-3xl mx-auto my-10 bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="p-6 h-96 overflow-y-scroll">
@@ -41,7 +13,7 @@ const ChatBox = () => {
             className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'} mb-2`}
           >
             <div
-              className={`p-2 rounded-lg ${msg.type === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+              className={`p-2 text-left rounded-lg ${msg.type === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
             >
               <ReactMarkdown
                 components={{
@@ -83,7 +55,7 @@ const ChatBox = () => {
             type="submit"
             className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            Send
+            发送
           </button>
         </div>
       </form>
