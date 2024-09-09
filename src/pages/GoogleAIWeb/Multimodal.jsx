@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const API_KEY = "";
-// Access your API key (see "Set up your API key" above)
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 function App() {
@@ -69,10 +68,10 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-4">Image Question App</h1>
+        <h1 className="text-2xl font-bold mb-4">多模态聊天框展示</h1>
         <input
           type="file"
-          accept="image/*"
+      
           multiple
           onChange={handleImageUpload}
           className="mb-4"
